@@ -1,0 +1,482 @@
+//
+// Copyright (C) 2022 Paranoid Android
+// SPDX-License-Identifier: Apache-2.0
+//
+
+soong_config_module_type_import {
+    from: "packages/modules/common/Android.bp",
+    module_types: ["module_apex_set","module_android_app_set"],
+}
+
+module_apex_set {
+    name: "com.google.android.adbd_trimmed_compressed",
+    apex_name: "com.android.adbd",
+    owner: "google",
+    overrides: ["com.android.adbd"],
+    set: "com.google.android.adbd_trimmed_compressed.apks",
+    prefer: true,
+    soong_config_variables: {
+       module_build_from_source: {
+           prefer: false
+       }
+    },
+}
+
+module_apex_set {
+    name: "com.google.android.adservices_trimmed_compressed",
+    apex_name: "com.android.adservices",
+    owner: "google",
+    overrides: ["com.android.adservices"],
+    set: "com.google.android.adservices_trimmed_compressed.apks",
+    prefer: true,
+    soong_config_variables: {
+       module_build_from_source: {
+           prefer: false
+       }
+    },
+}
+
+module_apex_set {
+    name: "com.google.android.art_compressed",
+    apex_name: "com.android.art",
+    owner: "google",
+    // Override both AOSP APEX variants, to ensure only com.google.android.art
+    // is installed regardless which APEX the logic in runtime_libart.mk has
+    // picked.
+    overrides: [
+        "com.android.art",
+        "com.android.art.debug",
+    ],
+    set: "com.google.android.art_compressed.apks",
+    prefer: true,
+    soong_config_variables: {
+       module_build_from_source: {
+           prefer: false
+       }
+    },
+}
+
+module_android_app_set {
+    name: "CaptivePortalLoginGoogle",
+    owner: "google",
+    set: "CaptivePortalLoginGoogle.apks",
+    overrides: ["CaptivePortalLogin"],
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+}
+
+module_apex_set {
+    name: "com.google.android.cellbroadcast_compressed",
+    apex_name: "com.android.cellbroadcast",
+    owner: "google",
+    overrides: ["com.android.cellbroadcast"],
+//    filename: "com.google.android.cellbroadcast.capex",
+    set: "com.google.android.cellbroadcast_compressed.apks",
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+    required: [
+        "GoogleCellBroadcast_permissions.xml",
+        "GoogleCellBroadcast_config.xml",
+    ],
+}
+
+prebuilt_etc {
+    name: "GoogleCellBroadcast_permissions.xml",
+    src: "GoogleCellBroadcast_permissions.xml",
+    sub_dir: "permissions",
+}
+
+prebuilt_etc {
+    name: "GoogleCellBroadcast_config.xml",
+    src: "GoogleCellBroadcast_config.xml",
+    product_specific: true,
+    sub_dir: "sysconfig",
+}
+
+module_apex_set {
+    name: "com.google.android.conscrypt_compressed",
+    apex_name: "com.android.conscrypt",
+    required: [
+        "conscrypt.com.android.conscrypt",
+    ],
+    owner: "google",
+    overrides: ["com.android.conscrypt"],
+//    filename: "com.google.android.conscrypt.capex",
+    set: "com.google.android.conscrypt_compressed.apks",
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+}
+
+module_apex_set {
+    name: "com.google.android.resolv_compressed",
+    apex_name: "com.android.resolv",
+    owner: "google",
+    overrides: ["com.android.resolv"],
+//    filename: "com.google.android.resolv.capex",
+    set: "com.google.android.resolv_compressed.apks",
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+}
+
+module_android_app_set {
+    name: "DocumentsUIGoogle",
+    set: "DocumentsUIGoogle.apks",
+    privileged: true,
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+    overrides: ["DocumentsUI",],
+    required: [
+        "GoogleDocumentsUI_permissions.xml",
+        "privapp_whitelist_com.android.documentsui",
+    ],
+}
+
+prebuilt_etc {
+    name: "GoogleDocumentsUI_permissions.xml",
+    src: "GoogleDocumentsUI_permissions.xml",
+    sub_dir: "permissions",
+}
+
+module_apex_set {
+    name: "com.google.mainline.primary.libs",
+    owner: "google",
+    filename: "com.google.mainline.primary.libs.apex",
+    set: "com.google.mainline.primary.libs.apks",
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+}
+
+module_apex_set {
+    name: "com.google.android.extservices_compressed",
+    apex_name: "com.android.extservices",
+    owner: "google",
+    overrides: [
+        "com.android.extservices",
+//        "com.android.extservices.gms",
+    ],
+//    filename: "com.google.android.extservices.capex",
+    set: "com.google.android.extservices_compressed.apks",
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+    required: [
+        "GoogleExtServices_permissions.xml",
+        "GoogleExtServicesConfigOverlay",
+    ],
+}
+
+prebuilt_etc {
+    name: "GoogleExtServices_permissions.xml",
+    src: "GoogleExtServices_permissions.xml",
+    sub_dir: "permissions",
+}
+
+module_apex_set {
+    name: "com.google.android.ipsec_compressed",
+    apex_name: "com.android.ipsec",
+    required: [
+        "android.net.ipsec.ike.com.android.ipsec",
+    ],
+    owner: "google",
+    overrides: ["com.android.ipsec"],
+//    filename: "com.google.android.ipsec.capex",
+    set: "com.google.android.ipsec_compressed.apks",
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+}
+
+module_apex_set {
+    name: "com.google.android.media_compressed",
+    apex_name: "com.android.media",
+    required: [
+        "updatable-media.com.android.media",
+    ],
+    owner: "google",
+    overrides: ["com.android.media"],
+//    filename: "com.google.android.media.capex",
+    set: "com.google.android.media_compressed.apks",
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+}
+
+module_apex_set {
+    name: "com.google.android.mediaprovider_compressed",
+    apex_name: "com.android.mediaprovider",
+    owner: "google",
+    overrides: ["com.android.mediaprovider"],
+//    filename: "com.google.android.mediaprovider.capex",
+    set: "com.google.android.mediaprovider_compressed.apks",
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+    required: [
+        "framework-mediaprovider.com.android.mediaprovider",
+        "GoogleMediaProvider_permissions.xml",
+        "preinstalled-packages-com.google.android.providers.media.module.xml"
+    ],
+}
+
+prebuilt_etc {
+    name: "GoogleMediaProvider_permissions.xml",
+    src: "GoogleMediaProvider_permissions.xml",
+    sub_dir: "permissions",
+}
+
+prebuilt_etc {
+      name: "preinstalled-packages-com.google.android.providers.media.module.xml",
+      src: "preinstalled-packages-com.google.android.providers.media.module.xml",
+      sub_dir: "sysconfig",
+}
+
+module_apex_set {
+    name: "com.google.android.media.swcodec_compressed",
+    apex_name: "com.android.media.swcodec",
+    owner: "google",
+    overrides: ["com.android.media.swcodec"],
+//    filename: "com.google.android.media.swcodec.capex",
+    set: "com.google.android.media.swcodec_compressed.apks",
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+}
+
+android_app_set {
+    name: "com.google.android.modulemetadata",
+    set: "com.google.android.modulemetadata_splus.apks",
+    overrides: ["ModuleMetadata","ModuleMetadataGoogle",],
+    product_specific: true,
+    required: ["ModuleMetadataGoogleOverlay",],
+}
+
+module_android_app_set {
+    name: "NetworkPermissionConfigGoogle",
+    set: "NetworkPermissionConfigGoogle.apks",
+    privileged: true,
+    overrides: ["NetworkPermissionConfig",],
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+}
+
+module_android_app_set {
+    name: "NetworkStackGoogle",
+    set: "NetworkStackGoogle.apks",
+    privileged: true,
+    overrides: ["NetworkStack", "NetworkStackNext",],
+    required: ["GoogleNetworkStack_permissions.xml",],
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+}
+
+prebuilt_etc {
+    name: "GoogleNetworkStack_permissions.xml",
+    src: "GoogleNetworkStack_permissions.xml",
+    sub_dir: "permissions",
+}
+
+module_apex_set {
+    name: "com.google.android.neuralnetworks_compressed",
+    apex_name: "com.android.neuralnetworks",
+    owner: "google",
+    overrides: ["com.android.neuralnetworks"],
+//    filename: "com.google.android.neuralnetworks.capex",
+    set: "com.google.android.neuralnetworks_compressed.apks",
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+}
+
+module_apex_set {
+    name: "com.google.android.permission_compressed",
+    apex_name: "com.android.permission",
+    required: [
+        "GooglePermissionController_permissions.xml",
+        "framework-permission.com.android.permission",
+        "service-permission.com.android.permission",
+    ],
+    owner: "google",
+    overrides: [
+        "com.android.permission",
+        "PermissionController",
+//        "com.android.permission.gms",
+    ],
+//    filename: "com.google.android.permission.capex",
+    set: "com.google.android.permission_compressed.apks",
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+}
+
+prebuilt_etc {
+    name: "GooglePermissionController_permissions.xml",
+    src: "GooglePermissionController_permissions.xml",
+    sub_dir: "permissions",
+}
+
+module_apex_set {
+    name: "com.google.android.scheduling_compressed",
+    apex_name: "com.android.scheduling",
+    owner: "google",
+    overrides: ["com.android.scheduling"],
+//    filename: "com.google.android.scheduling.capex",
+    set: "com.google.android.scheduling_compressed.apks",
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+}
+
+module_apex_set {
+    name: "com.google.android.sdkext_compressed",
+    apex_name: "com.android.sdkext",
+    required: [
+        "framework-sdkextensions.com.android.sdkext",
+    ],
+    owner: "google",
+    overrides: ["com.android.sdkext"],
+//    filename: "com.google.android.sdkext.capex",
+    set: "com.google.android.sdkext_compressed.apks",
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+}
+
+module_apex_set {
+    name: "com.google.android.os.statsd_compressed",
+    apex_name: "com.android.os.statsd",
+    owner: "google",
+    overrides: ["com.android.os.statsd"],
+//    filename: "com.google.android.os.statsd.capex",
+    set: "com.google.android.os.statsd_compressed.apks",
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+}
+
+android_app_set {
+    name: "com.google.mainline.telemetry",
+    owner: "google",
+    product_specific: true,
+    set: "com.google.mainline.telemetry_splus.apks",
+}
+
+module_apex_set {
+    name: "com.google.android.tethering_compressed",
+    apex_name: "com.android.tethering",
+    required: [
+        "framework-tethering.com.android.tethering",
+        "GoogleTethering_permissions.xml",
+    ],
+    owner: "google",
+    overrides: ["com.android.tethering"],
+//    filename: "com.google.android.tethering.capex",
+    set: "com.google.android.tethering_compressed.apks",
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+}
+
+prebuilt_etc {
+    name: "GoogleTethering_permissions.xml",
+    src: "GoogleTethering_permissions.xml",
+    sub_dir: "permissions",
+}
+
+module_apex_set {
+    name: "com.google.android.tzdata4",
+    apex_name: "com.android.tzdata",
+    owner: "google",
+    overrides: ["com.android.tzdata"],
+    filename: "com.google.android.tzdata4.apex",
+    set: "com.google.android.tzdata4.apks",
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+}
+
+module_apex_set {
+    name: "com.google.android.wifi_compressed",
+    apex_name: "com.android.wifi",
+    required: [
+        "framework-wifi.com.android.wifi",
+        "service-wifi.com.android.wifi",
+    ],
+    owner: "google",
+    overrides: ["com.android.wifi"],
+//    filename: "com.google.android.wifi.capex",
+    set: "com.google.android.wifi_compressed.apks",
+    prefer: true,
+    soong_config_variables: {
+        module_build_from_source: {
+            prefer: false,
+        },
+    },
+}
